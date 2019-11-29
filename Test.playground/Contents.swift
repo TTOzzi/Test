@@ -3,6 +3,11 @@ class Score {
     var ball = 0
     var out = 0
     var hit = 0
+    
+    func nextHitter() {
+        self.strike = 0
+        self.ball = 0
+    }
 }
 
 func game() {
@@ -18,8 +23,7 @@ func throwBall(_ n: Int, _ s: Score) {
         s.strike += 1
         print("스트라이크!")
         if s.strike == 3 {
-            s.strike = 0
-            s.ball = 0
+            s.nextHitter()
             s.out += 1
             print("아웃!")
         }
@@ -27,20 +31,17 @@ func throwBall(_ n: Int, _ s: Score) {
         s.ball += 1
         print("볼!")
         if s.ball == 4 {
-            s.strike = 0
-            s.ball = 0
+            s.nextHitter()
             print("볼넷!")
         }
     case 3:
         s.hit += 1
-        s.strike = 0
-        s.ball = 0
+        s.nextHitter()
         print("안타!")
     case 4:
         s.out += 1
-        s.strike = 0
-        s.ball = 0
         if s.out < 3 {
+            s.nextHitter()
             print("아웃! 다음 타자가 타석에 입석했습니다.")
         } else {
             print("아웃!")

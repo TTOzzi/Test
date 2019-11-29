@@ -3,18 +3,22 @@ class Score {
     var ball = 0
     var out = 0 {
         didSet {
-            self.scoreInit()
             if self.out < 3 {
                 print("아웃! 다음 타자가 타석에 입석했습니다.")
             } else {
                 print("아웃!")
             }
+            self.scoreInit()
         }
     }
     var hit = 0 {
         didSet {
+            if self.ball == 4 {
+                print("볼넷! 다음 타자가 타석에 입장했습니다.")
+            } else {
+                print("안타! 다음 타자가 타석에 입장했습니다.")
+            }
             self.scoreInit()
-            print("안타! 다음 타자가 타석에 입장했습니다.")
         }
     }
     
@@ -54,7 +58,6 @@ func throwBall(_ n: Int, _ s: Score) {
         print("볼!")
         if s.ball == 4 {
             s.hit += 1
-            print("볼넷!")
         }
     case 3:
         s.hit += 1

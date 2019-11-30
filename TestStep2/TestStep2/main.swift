@@ -31,12 +31,6 @@ class Score {
     var ball = 0
     var out = 0 {
         didSet {
-            if self.out < 3 {
-                print("아웃! 다음 타자가 타석에 입석했습니다.")
-                self.order += 1
-            } else {
-                print("아웃!")
-            }
             self.scoreInit()
         }
     }
@@ -125,12 +119,12 @@ func game(teamA: Team, teamB: Team) {
 }
 
 func inning(team: Team) {
+    print("\(team.score.order)번 \(team.players[team.score.order - 1].name)")
     while team.score.out < 3 {
-        print("\(team.score.order)번 \(team.players[team.score.order - 1].name)") // 선수 처음 바뀔때만 출력되도록 수정 필요
-        throwBall(battingAverage(who: team.players[team.score.order - 1]), team.score)
+        throwBall(battingAverage(who: team.players[team.score.order - 1]), team)
         team.score.printScore()
     }
-    team.score.out = 0 // 프로퍼티 감시자가 작동함 수정 필요
+    team.score.out = 0
 }
 
 func battingAverage(who p: Hitter) -> Int {
@@ -148,24 +142,40 @@ func battingAverage(who p: Hitter) -> Int {
     }
 }
 
-func throwBall(_ n: Int, _ s: Score) {
+func throwBall(_ n: Int, _ t: Team) {
     switch n {
     case 1:
-        s.strike += 1
+        t.score.strike += 1
         print("스트라이크!")
-        if s.strike == 3 {
-            s.out += 1
+        if t.score.strike == 3 {
+            t.score.out += 1
+            if t.score.out < 3 {
+                print("아웃! 다음 타자가 타석에 입석했습니다.")
+                t.score.order += 1
+                print("\(t.score.order)번 \(t.players[t.score.order - 1].name)")
+            } else {
+                print("아웃!")
+            }
         }
     case 2:
-        s.ball += 1
+        t.score.ball += 1
         print("볼!")
-        if s.ball == 4 {
-            s.hit += 1
+        if t.score.ball == 4 {
+            t.score.hit += 1
+            print("\(t.score.order)번 \(t.players[t.score.order - 1].name)")
         }
     case 3:
-        s.hit += 1
+        t.score.hit += 1
+        print("\(t.score.order)번 \(t.players[t.score.order - 1].name)")
     case 4:
-        s.out += 1
+        t.score.out += 1
+        if t.score.out < 3 {
+            print("아웃! 다음 타자가 타석에 입석했습니다.")
+            t.score.order += 1
+            print("\(t.score.order)번 \(t.players[t.score.order - 1].name)")
+        } else {
+            print("아웃!")
+        }
     default:
         break
     }

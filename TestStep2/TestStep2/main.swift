@@ -139,8 +139,10 @@ func game(teamA: Team, teamB: Team) {
     for i in 1...6 {
         print("\(i)회 초 \(teamA.teamName) 공격\n")
         inning(team: teamA)
+        scoreBoard(teamA: teamA, teamB: teamB)
         print("\(i)회 말 \(teamB.teamName) 공격\n")
         inning(team: teamB)
+        scoreBoard(teamA: teamA, teamB: teamB)
     }
     print("""
         경기 종료
@@ -149,6 +151,15 @@ func game(teamA: Team, teamB: Team) {
         \(teamA.score.s) : \(teamB.score.s)
         Thank you!
         """)
+}
+
+func scoreBoard(teamA: Team, teamB: Team) {
+    print("""
+    
+    \(teamA.teamName) VS \(teamB.teamName)
+    \(teamA.score.s) : \(teamB.score.s)
+    
+    """)
 }
 
 func inning(team: Team) {

@@ -31,6 +31,12 @@ class Score {
     var ball = 0
     var out = 0 {
         didSet {
+            if out < 3, out != 0 {
+                print("아웃! 다음 타자가 타석에 입석했습니다.")
+            } else if out != 0 {
+                print("아웃!")
+            }
+            self.order += 1
             self.scoreInit()
         }
     }
@@ -39,17 +45,26 @@ class Score {
             if self.ball == 4 {
                 print("볼넷! 다음 타자가 타석에 입장했습니다.")
                 self.order += 1
-            } else {
+            } else if hit != 0{
                 print("안타! 다음 타자가 타석에 입장했습니다.")
                 self.order += 1
+            }
+            if hit >= 4 {
+                self.s += 1
             }
             self.scoreInit()
         }
     }
+    var s = 0
     
     func scoreInit() {
         self.strike = 0
         self.ball = 0
+    }
+    
+    func nextInning() {
+        self.out = 0
+        self.hit = 0
     }
     
     func printScore() {
@@ -115,7 +130,13 @@ func game(teamA: Team, teamB: Team) {
         print("\(i)회 말 \(teamB.teamName) 공격\n")
         inning(team: teamB)
     }
-    print("경기 종료")
+    print("""
+        경기 종료
+
+        \(teamA.teamName) VS \(teamB.teamName)
+        \(teamA.score.s) : \(teamB.score.s)
+        Thank you!
+        """)
 }
 
 func inning(team: Team) {
@@ -124,7 +145,7 @@ func inning(team: Team) {
         throwBall(battingAverage(who: team.players[team.score.order - 1]), team)
         team.score.printScore()
     }
-    team.score.out = 0
+    team.score.nextInning()
 }
 
 func battingAverage(who p: Hitter) -> Int {
@@ -150,11 +171,7 @@ func throwBall(_ n: Int, _ t: Team) {
         if t.score.strike == 3 {
             t.score.out += 1
             if t.score.out < 3 {
-                print("아웃! 다음 타자가 타석에 입석했습니다.")
-                t.score.order += 1
                 print("\(t.score.order)번 \(t.players[t.score.order - 1].name)")
-            } else {
-                print("아웃!")
             }
         }
     case 2:
@@ -170,11 +187,7 @@ func throwBall(_ n: Int, _ t: Team) {
     case 4:
         t.score.out += 1
         if t.score.out < 3 {
-            print("아웃! 다음 타자가 타석에 입석했습니다.")
-            t.score.order += 1
             print("\(t.score.order)번 \(t.players[t.score.order - 1].name)")
-        } else {
-            print("아웃!")
         }
     default:
         break

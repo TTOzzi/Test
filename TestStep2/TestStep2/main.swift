@@ -27,8 +27,20 @@ class Score {
             }
         }
     }
-    var strike = 0
-    var ball = 0
+    var strike = 0 {
+        didSet {
+            if strike != 0 {
+                print("스트라이크!")
+            }
+        }
+    }
+    var ball = 0 {
+        didSet {
+            if ball != 0 {
+                print("볼!")
+            }
+        }
+    }
     var out = 0 {
         didSet {
             if out < 3, out != 0 {
@@ -167,7 +179,6 @@ func throwBall(_ n: Int, _ t: Team) {
     switch n {
     case 1:
         t.score.strike += 1
-        print("스트라이크!")
         if t.score.strike == 3 {
             t.score.out += 1
             if t.score.out < 3 {
@@ -176,7 +187,6 @@ func throwBall(_ n: Int, _ t: Team) {
         }
     case 2:
         t.score.ball += 1
-        print("볼!")
         if t.score.ball == 4 {
             t.score.hit += 1
             print("\(t.score.order)번 \(t.players[t.score.order - 1].name)")

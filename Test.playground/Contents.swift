@@ -1,24 +1,42 @@
 class Score {
-    var strike = 0
-    var ball = 0
+    var strike = 0 {
+        didSet {
+            if strike != 0 {
+                print("스트라이크!")
+            }
+            if strike == 3 {
+                out += 1
+            }
+        }
+    }
+    var ball = 0 {
+        didSet {
+            if ball != 0 {
+                print("볼!")
+            }
+            if ball == 4 {
+                hit += 1
+            }
+        }
+    }
     var out = 0 {
         didSet {
-            if self.out < 3 {
+            if out < 3 {
                 print("아웃! 다음 타자가 타석에 입석했습니다.")
             } else {
                 print("아웃!")
             }
-            self.scoreInit()
+            scoreInit()
         }
     }
     var hit = 0 {
         didSet {
-            if self.ball == 4 {
+            if ball == 4 {
                 print("볼넷! 다음 타자가 타석에 입장했습니다.")
             } else {
                 print("안타! 다음 타자가 타석에 입장했습니다.")
             }
-            self.scoreInit()
+            scoreInit()
         }
     }
     
@@ -49,16 +67,8 @@ func throwBall(_ n: Int, _ s: Score) {
     switch n {
     case 1:
         s.strike += 1
-        print("스트라이크!")
-        if s.strike == 3 {
-            s.out += 1
-        }
     case 2:
         s.ball += 1
-        print("볼!")
-        if s.ball == 4 {
-            s.hit += 1
-        }
     case 3:
         s.hit += 1
     case 4:

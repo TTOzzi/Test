@@ -28,6 +28,8 @@ func main() {
             teams = inputData()
         } else if input == "1" {
             print("이미 데이터를 입력하셨습니다.\n")
+        } else if input == "2", teams.count == 0 {
+            print("출력 할 데이터가 없습니다.\n")
         } else if input == "2" {
             printData(teams)
             break

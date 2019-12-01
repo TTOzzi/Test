@@ -90,19 +90,28 @@ func main() {
         print("신나는 야구시합\n1. 데이터 입력\n2. 데이터 출력\n3. 시합 시작")
         print("메뉴 선택 (1 - 3)")
         let input = readLine()!
-        if input == "1", teams.count == 0 {
-            teams = inputData()
-        } else if input == "1" {
-            print("이미 데이터를 입력하셨습니다.\n")
-        } else if input == "2", teams.count == 0 {
-            print("출력 할 데이터가 없습니다.\n")
-        } else if input == "2" {
-            printData(teams)
-        } else if input == "3" {
-            game(teamA: teams[0], teamB: teams[1])
-            break
-        } else {
-            print("잘못된 값을 입력하셨습니다.\n")
+        switch input {
+        case "1":
+            if teams.count == 0 {
+                teams = inputData()
+            } else {
+                print("이미 데이터를 입력하셨습니다.")
+            }
+        case "2":
+            if teams.count == 0 {
+                print("출력 할 데이터가 없습니다.")
+            } else {
+                printData(teams)
+            }
+        case "3":
+            if teams.count == 0 {
+                print("데이터를 먼저 입력해주세요")
+            } else {
+                game(teamA: teams[0], teamB: teams[1])
+                return
+            }
+        default:
+            print("잘못된 값을 입력하셨습니다.")
         }
     }
 }

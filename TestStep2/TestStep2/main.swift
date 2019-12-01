@@ -22,7 +22,7 @@ struct Team {
 class Score {
     var order = 1 {
         didSet {
-            if self.order == 3 {    // 9 명 기준으로 변경 필요
+            if self.order == 10 {
                 order = 1
             }
         }
@@ -95,23 +95,23 @@ func main() {
             if teams.count == 0 {
                 teams = inputData()
             } else {
-                print("이미 데이터를 입력하셨습니다.")
+                print("이미 데이터를 입력하셨습니다.\n")
             }
         case "2":
             if teams.count == 0 {
-                print("출력 할 데이터가 없습니다.")
+                print("출력 할 데이터가 없습니다.\n")
             } else {
                 printData(teams)
             }
         case "3":
             if teams.count == 0 {
-                print("데이터를 먼저 입력해주세요")
+                print("데이터를 먼저 입력해주세요.\n")
             } else {
                 game(teamA: teams[0], teamB: teams[1])
                 return
             }
         default:
-            print("잘못된 값을 입력하셨습니다.")
+            print("잘못된 값을 입력하셨습니다.\n")
         }
     }
 }
@@ -119,10 +119,10 @@ func main() {
 func inputData() -> [Team] {
     var ret = [Team]()
     for i in 1...2 {
-        print("\(i)팀의 이름을 입력하세요>")
+        print("\n\(i)팀의 이름을 입력하세요>")
         let teamName = readLine()!
         var players = [Hitter]()
-        for j in 1...2 {    // 9명으로 변경 필요
+        for j in 1...9 {
             print("\(j)번 타자 정보 입력>")
             let input = readLine()!.components(separatedBy: ", ")
             players.append(Hitter(number: j, name: input[0], h: Double(input[1])!))
